@@ -1,4 +1,4 @@
-# unet liver
+# Liver Segmentation
 Unet network for liver CT image segmentation
 
 ## 使用提示
