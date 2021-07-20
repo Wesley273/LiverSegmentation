@@ -1,8 +1,6 @@
 import torch
 from torchvision.transforms import transforms as T
-#argparse模块的作用是用于解析命令行参数，例如python parseTest.py input.txt --port=8080
-import argparse
-import unet
+from unet import UNet
 from torch import optim
 from dataset import LiverDataset
 from torch.utils.data import DataLoader
@@ -16,7 +14,7 @@ x_transform = T.Compose([
     #torchvision.transforms.Normalize(mean, std, inplace=False)
     T.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
-# mask只需要转换为tensor
+#mask只需要转换为tensor
 y_transform = T.ToTensor()
 
 
@@ -47,7 +45,7 @@ def train_model(model, criterion, optimizer, dataload, num_epochs=20):
 
 #训练模型
 def train():
-    model = unet.UNet(3, 1).to(device)
+    model = UNet(3, 1).to(device)
     batch_size = 4
     #损失函数
     criterion = torch.nn.BCELoss()
@@ -71,7 +69,7 @@ def train():
 
 #测试
 def test():
-    model = unet.UNet(3, 1)
+    model = UNet(3, 1)
     model.load_state_dict(torch.load(r".\weights_19.pth", map_location='cpu'))
     liver_dataset = LiverDataset("data/val",
                                  transform=x_transform,
