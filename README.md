@@ -27,7 +27,7 @@ Unet network for liver CT image segmentation
 
 
 ## 多类别实现
-修改2个地方即可：unet最后一层的通道数设置为类别数；损失函数使用CrossEntropyLoss
+修改2个地方即可：unet最后一层的通道数设置为类别数；损失函数使用交叉熵损失函数
 ```python
 bath_size,img_size,num_classes=2,3,4
 #model = Unet(3, num_classes)
