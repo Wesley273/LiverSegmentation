@@ -70,7 +70,7 @@ def train():
 #测试
 def test():
     model = UNet(3, 1)
-    model.load_state_dict(torch.load(r".\weights_19.pth", map_location='cpu'))
+    model.load_state_dict(torch.load(r"C:\Users\Wesley\Desktop\weights_19.pth", map_location='cpu'))
     liver_dataset = LiverDataset("data/val",
                                  transform=x_transform,
                                  target_transform=y_transform)
