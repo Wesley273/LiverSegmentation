@@ -5,16 +5,16 @@ from torch import optim
 from dataset import LiverDataset
 from torch.utils.data import DataLoader
 
-#是否使用current cuda device or torch.device('cuda:0')
+# 是否使用current cuda device or torch.device('cuda:0')
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 x_transform = T.Compose([
     T.ToTensor(),
-    #标准化至[-1,1],规定均值和标准差
-    #torchvision.transforms.Normalize(mean, std, inplace=False)
+    # 标准化至[-1,1],规定均值和标准差
+    # torchvision.transforms.Normalize(mean, std, inplace=False)
     T.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
 ])
-#mask只需要转换为tensor
+# mask只需要转换为tensor
 y_transform = T.ToTensor()
 
 
@@ -24,35 +24,35 @@ def train_model(model, criterion, optimizer, dataload, num_epochs=20):
         print('-' * 10)
         dataset_size = len(dataload.dataset)
         epoch_loss = 0
-        step = 0  #minibatch数
+        step = 0  # minibatch数
         for x, y in dataload:  # 分100次遍历数据集，每次遍历batch_size=4
-            optimizer.zero_grad()  #每次minibatch都要将梯度(dw,db,...)清零
+            optimizer.zero_grad()  # 每次minibatch都要将梯度(dw,db,...)清零
             inputs = x.to(device)
             labels = y.to(device)
-            outputs = model(inputs)  #前向传播
-            loss = criterion(outputs, labels)  #计算损失
-            loss.backward()  #梯度下降,计算出梯度
-            optimizer.step()  #更新参数一次：所有的优化器Optimizer都实现了step()方法来对所有的参数进行更新
+            outputs = model(inputs)  # 前向传播
+            loss = criterion(outputs, labels)  # 计算损失
+            loss.backward()  # 梯度下降,计算出梯度
+            optimizer.step()  # 更新参数一次：所有的优化器Optimizer都实现了step()方法来对所有的参数进行更新
             epoch_loss += loss.item()
             step += 1
             print("%d/%d,train_loss:%0.3f" %
                   (step, dataset_size // dataload.batch_size, loss.item()))
         print("epoch %d loss:%0.3f" % (epoch, epoch_loss))
-    #保存模型参数
+    # 保存模型参数
     torch.save(model.state_dict(), 'weights_%d.pth' % epoch)
     return model
 
 
-#训练模型
+# 训练模型
 def train():
     model = UNet(3, 1).to(device)
     batch_size = 4
-    #损失函数
+    # 损失函数
     criterion = torch.nn.BCELoss()
-    #梯度下降
+    # 梯度下降
     optimizer = optim.Adam(model.parameters(
-    ))  #model.parameters():Returns an iterator over module parameters
-    #加载数据集
+    ))  # model.parameters():Returns an iterator over module parameters
+    # 加载数据集
     liver_dataset = LiverDataset("data/train",
                                  transform=x_transform,
                                  target_transform=y_transform)
@@ -67,14 +67,14 @@ def train():
     train_model(model, criterion, optimizer, dataloader)
 
 
-#测试
+# 测试
 def test():
     model = UNet(3, 1)
-    model.load_state_dict(torch.load(r"C:\Users\Wesley\Desktop\weights_19.pth", map_location='cpu'))
+    model.load_state_dict(torch.load(r"/home/Wangling/MengLinzhi/LiverSegmentation/weights_19.pth", map_location='cpu'))
     liver_dataset = LiverDataset("data/val",
                                  transform=x_transform,
                                  target_transform=y_transform)
-    dataloaders = DataLoader(liver_dataset)  #batch_size默认为1
+    dataloaders = DataLoader(liver_dataset)  # batch_size默认为1
     model.eval()
     import matplotlib.pyplot as plt
     plt.ion()

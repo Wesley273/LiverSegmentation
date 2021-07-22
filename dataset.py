@@ -20,7 +20,6 @@ class LiverDataset(data.Dataset):
             mask = os.path.join(root, "%03d_mask.png" % i)
             #append只能有一个参数，加上[]变成一个list
             imgs.append([img, mask])
-            print(imgs)
 
         self.imgs = imgs
         self.transform = transform
