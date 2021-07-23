@@ -15,7 +15,7 @@ class LiverDataset(data.Dataset):
 
         imgs = []
         for i in range(n):
-            #os.path.join(path1[,path2[,......]]):将多个路径组合后返回
+            #注意这里的格式化字符串用法
             img = os.path.join(root, "%03d.png" % i)
             mask = os.path.join(root, "%03d_mask.png" % i)
             #append只能有一个参数，加上[]变成一个list
@@ -37,5 +37,5 @@ class LiverDataset(data.Dataset):
         return img_x, img_y
 
     def __len__(self):
-        #400,list[i]有两个元素，[img,mask]
+        #list[i]有两个元素，[img,mask]
         return len(self.imgs)
