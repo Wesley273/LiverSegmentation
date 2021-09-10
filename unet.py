@@ -7,6 +7,7 @@ class DoubleConv(nn.Module):
     def __init__(self, in_ch, out_ch):
         super(DoubleConv, self).__init__()
         self.conv = nn.Sequential(
+            #kernel_size=3,padding=1
             nn.Conv2d(in_ch, out_ch, 3, padding=1),  #in_ch、out_ch是通道数
             nn.BatchNorm2d(out_ch),
             nn.ReLU(inplace=True),
@@ -22,7 +23,7 @@ class UNet(nn.Module):
     def __init__(self, in_ch, out_ch):
         super(UNet, self).__init__()
         self.conv1 = DoubleConv(in_ch, 64)
-        self.pool1 = nn.MaxPool2d(2)  #每次把图像尺寸缩小一半
+        self.pool1 = nn.MaxPool2d(2)  #每次把图像尺寸缩小一半，像素4合1
         self.conv2 = DoubleConv(64, 128)
         self.pool2 = nn.MaxPool2d(2)
         self.conv3 = DoubleConv(128, 256)

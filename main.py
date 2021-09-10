@@ -33,7 +33,7 @@ def train_model(model, criterion, optimizer, dataload, num_epochs=20):
             loss = criterion(outputs, labels)  # 计算损失
             loss.backward()  # 梯度下降,计算出梯度
             optimizer.step()  # 更新参数一次：所有的优化器Optimizer都实现了step()方法来对所有的参数进行更新
-            epoch_loss += loss.item()
+            epoch_loss += loss.item()  #loss.item()是为了取得一个元素张量的数值
             step += 1
             print("%d/%d,train_loss:%0.3f" %
                   (step, dataset_size // dataload.batch_size, loss.item()))
@@ -50,8 +50,8 @@ def train():
     # 损失函数
     criterion = torch.nn.BCELoss()
     # 梯度下降
-    optimizer = optim.Adam(model.parameters(
-    ))  # model.parameters():Returns an iterator over module parameters
+    # model.parameters():Returns an iterator over module parameters
+    optimizer = optim.Adam(model.parameters())
     # 加载数据集
     liver_dataset = LiverDataset("data/train",
                                  transform=x_transform,
@@ -70,7 +70,10 @@ def train():
 # 测试
 def test():
     model = UNet(3, 1)
-    model.load_state_dict(torch.load(r"/home/Wangling/MengLinzhi/LiverSegmentation/weights_19.pth", map_location='cpu'))
+    model.load_state_dict(
+        torch.load(
+            r"/home/Wangling/MengLinzhi/LiverSegmentation/weights_19.pth",
+            map_location='cpu'))
     liver_dataset = LiverDataset("data/val",
                                  transform=x_transform,
                                  target_transform=y_transform)
@@ -88,4 +91,4 @@ def test():
 
 
 if __name__ == '__main__':
-    train()
+    test()
