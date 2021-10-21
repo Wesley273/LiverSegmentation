@@ -40,7 +40,6 @@ class UNet(nn.Module):
         self.conv8 = DoubleConv(256, 128)
         self.up9 = nn.ConvTranspose2d(128, 64, 2, stride=2)
         self.conv9 = DoubleConv(128, 64)
-
         self.conv10 = nn.Conv2d(64, out_ch, 1)
 
     def forward(self, x):
