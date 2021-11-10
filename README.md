@@ -18,7 +18,7 @@ Unet network for liver CT image segmentation
 
 直接修改main.py中的main函数为train或test，并设置好test函数中模型路径即可直接运行main.<span>py
 
-本实现使用的数据集和模型文件已加入工程，可以直接clone，亦可使用百度云下载，链接如下: 
+本实现使用的数据集已加入工程，可以直接clone，训练好的模型可使用百度云下载，链接如下: 
 
 链接: https://pan.baidu.com/s/1LbhpNMyqc9dN1G70lrUTmA 提取码: s7j0
 
