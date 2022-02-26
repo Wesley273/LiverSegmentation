@@ -3,7 +3,7 @@ Unet network for liver CT image segmentation
 
 ## 使用提示
 
-该项目网络结构如下图，参考文献：U-Net: Convolutional Networks for Biomedical Image Segmentation
+该项目网络结构如下图，参考文献：[U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
 
 ![avatar](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
 
